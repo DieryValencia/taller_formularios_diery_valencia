@@ -60,6 +60,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+proyecto/staticfiles/
 
 # Flask stuff:
 instance/
@@ -131,7 +132,10 @@ dmypy.json
 # IDE
 .vscode/
 .idea/
+.vercel/
 
 # OS
 .DS_Store
 Thumbs.db
+
+.vercel
