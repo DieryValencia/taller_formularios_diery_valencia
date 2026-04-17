@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Taller de Formularios Django{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .hero-section {
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #5B5EA6 0%, #2DD4BF 50%, #8B5CF6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: #6B7280;
+        margin-bottom: 3rem;
+        font-weight: 400;
+        letter-spacing: 0.3px;
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .service-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 2.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #5B5EA6, #2DD4BF, #8B5CF6);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 16px 32px rgba(91, 94, 166, 0.15);
+    }
+
+    .service-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(91, 94, 166, 0.1) 0%, rgba(45, 212, 191, 0.1) 100%);
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-card:nth-child(1) .service-icon {
+        color: #5B5EA6;
+    }
+
+    .service-card:nth-child(2) .service-icon {
+        color: #2DD4BF;
+    }
+
+    .service-card:nth-child(3) .service-icon {
+        color: #8B5CF6;
+    }
+
+    .service-card:hover .service-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1F2937;
+        margin-bottom: 1rem;
+        letter-spacing: -0.3px;
+    }
+
+    .service-description {
+        color: #6B7280;
+        margin-bottom: 1.8rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        font-weight: 400;
+    }
+
+    .btn-service {
+        border-radius: 25px;
+        padding: 12px 28px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-asistencia {
+        background: linear-gradient(135deg, #5B5EA6 0%, #5050A0 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(91, 94, 166, 0.25);
+    }
+
+    .btn-asistencia:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(91, 94, 166, 0.35);
+        color: white;
+    }
+
+    .btn-solicitudes {
+        background: linear-gradient(135deg, #2DD4BF 0%, #06B6D4 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(45, 212, 191, 0.25);
+    }
+
+    .btn-solicitudes:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(45, 212, 191, 0.35);
+        color: white;
+    }
+
+    .btn-admin {
+        background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+    }
+
+    .btn-admin:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.35);
+        color: white;
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero-title {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .hero-subtitle {
+        animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    .service-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .service-card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .service-card:nth-child(2) {
+        animation-delay: 0.3s;
+    }
+
+    .service-card:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            height: 70px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Bienvenido al Sistema</h1>
+        <p class="hero-subtitle">Gestiona tu asistencia y solicitudes de forma segura y eficiente</p>
+
+        <div class="cards-grid">
+            <!-- Tarjeta de Asistencia -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="service-title">Registro de Asistencia</h2>
+                <p class="service-description">Registra tu asistencia diaria de manera rápida, sencilla y segura con nuestro formulario intuitivo.</p>
+                <a href="{% url 'asistencia_formulario' %}" class="btn-service btn-asistencia">
+                    Ir al Formulario <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <!-- Tarjeta de Solicitudes -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h2 class="service-title">Sistema de Solicitudes</h2>
+                <p class="service-description">Envía tus solicitudes académicas, administrativas o técnicas de forma estructurada y organizada.</p>
+                <a href="{% url 'solicitud_formulario' %}" class="btn-service btn-solicitudes">
+                    Ir al Formulario <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <!-- Tarjeta de Administración -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h2 class="service-title">Panel de Administración</h2>
+                <p class="service-description">Accede al panel administrativo para gestionar, revisar y controlar todos los datos del sistema.</p>
+                <a href="{% url 'admin:index' %}" class="btn-service btn-admin">
+                    Ir al Admin <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
